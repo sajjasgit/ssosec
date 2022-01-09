@@ -66,7 +66,7 @@ resource "aws_network_acl" "ssosec-nacl" {
     rule_no    = 102
     protocol   = "tcp"
     action     = "allow"
-    cidr_block = "0.0.0.0/0"
+    cidr_block = var.ssh_location
     from_port  = 22
     to_port    = 22
   }
@@ -102,7 +102,7 @@ resource "aws_network_acl" "ssosec-nacl" {
     rule_no    = 102
     protocol   = "tcp"
     action     = "allow"
-    cidr_block = "0.0.0.0/0"
+    cidr_block = var.ssh_location
     from_port  = 22
     to_port    = 22
   }
@@ -120,4 +120,3 @@ resource "aws_network_acl" "ssosec-nacl" {
     Name = local.nacl_name
   }
 }
-

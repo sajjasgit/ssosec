@@ -7,7 +7,7 @@ resource "aws_security_group" "ssosec-sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.ssh_location]
   }
 
   ingress {
