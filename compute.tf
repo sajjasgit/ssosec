@@ -45,7 +45,9 @@ resource "aws_instance" "ssosec-inc" {
     volume_type = "gp2"
   }
 
-  tags = local.tags
+  tags = {
+    Name = local.instance_name
+  }
 }
 
 # resource "aws_volume_attachment" "this" {
