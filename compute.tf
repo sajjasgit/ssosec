@@ -31,7 +31,7 @@ resource "aws_key_pair" "generated_key" {
 
 resource "aws_network_interface" "ssosec-nic" {
   subnet_id       = aws_subnet.ssosec-public-subnet.id
-  security_groups = [aws_security_group.sg_allow_inbound.id]
+  security_groups = [aws_security_group.ssosec-sg.id]
 
   tags = {
     Name = local.ssosec_nic

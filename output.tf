@@ -3,5 +3,5 @@ output "keypair" {
 }
 
 output "keyname" {
-  value = local.private_key_pem_name
+  value = aws_key_pair.generated_key.key_name
 }
