@@ -11,6 +11,7 @@ locals {
   iam_ecr_role_policy  = "${local.vpc_name}-ecr-role-policy"
   ssosec_nic           = "${local.vpc_name}-nic"
   availability_zone    = "${var.region}a"
+  instance_name        = "${local.vpc_name}-inc"
   tags = {
     Owner       = "ssosec-admin"
     Environment = var.env
