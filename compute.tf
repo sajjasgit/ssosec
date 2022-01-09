@@ -29,16 +29,8 @@ resource "aws_key_pair" "generated_key" {
   }
 }
 
-# resource "aws_network_interface" "ssosec-nic" {
-#   subnet_id       = aws_subnet.ssosec-public-subnet.id
-#   security_groups = [aws_security_group.ssosec-sg.id]
-
-#   tags = {
-#     Name = local.ssosec_nic
-#   }
-# }
-
 resource "aws_instance" "ssosec-inc" {
+  name                        = local.instance_name
   ami                         = data.aws_ami.amazon-linux-2.id
   instance_type               = var.instance_type
   subnet_id                   = aws_subnet.ssosec-public-subnet.id
@@ -48,22 +40,22 @@ resource "aws_instance" "ssosec-inc" {
   key_name                    = aws_key_pair.generated_key.key_name
   iam_instance_profile        = aws_iam_instance_profile.this.name
 
-  # network_interface {
-  #   network_interface_id = aws_network_interface.ssosec-nic.id
-  #   device_index         = 0
-  # }
+  root_block_device {
+    volume_size = 32
+    volume_type = "gp2"
+  }
 
   tags = local.tags
 }
 
-resource "aws_volume_attachment" "this" {
-  device_name = "/dev/xvda"
-  volume_id   = aws_ebs_volume.ssosec-ebs.id
-  instance_id = aws_instance.ssosec-inc.id
-}
+# resource "aws_volume_attachment" "this" {
+#   device_name = "/dev/xvda"
+#   volume_id   = aws_ebs_volume.ssosec-ebs.id
+#   instance_id = aws_instance.ssosec-inc.id
+# }
 
-resource "aws_ebs_volume" "ssosec-ebs" {
-  availability_zone = local.availability_zone
-  type              = "gp2"
-  size              = 32
-}
+# resource "aws_ebs_volume" "ssosec-ebs" {
+#   availability_zone = local.availability_zone
+#   type              = "gp2"
+#   size              = 32
+# }
