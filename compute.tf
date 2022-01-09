@@ -42,7 +42,7 @@ resource "aws_instance" "ssosec-inc" {
   ami                         = data.aws_ami.amazon-linux-2.id
   instance_type               = var.instance_type
   subnet_id                   = aws_subnet.ssosec-public-subnet.id
-  vpc_security_group_ids      = [aws_security_group.sg_allow_inbound.id]
+  vpc_security_group_ids      = [aws_security_group.ssosec-sg.id]
   associate_public_ip_address = true
   user_data                   = base64encode(templatefile("${path.module}/scripts/install_app.sh", { APP_ECR_REPO_URL = aws_ecr_repository.ssosec-ecr.repository_url, REGION = var.region }))
   key_name                    = aws_key_pair.generated_key.key_name
