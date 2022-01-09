@@ -53,9 +53,7 @@ resource "aws_instance" "ssosec-inc" {
     device_index         = 0
   }
 
-  tags = {
-    Name = local.tags
-  }
+  tags = local.tags
 }
 
 resource "aws_volume_attachment" "this" {
