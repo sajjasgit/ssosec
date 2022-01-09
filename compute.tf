@@ -29,14 +29,14 @@ resource "aws_key_pair" "generated_key" {
   }
 }
 
-resource "aws_network_interface" "ssosec-nic" {
-  subnet_id       = aws_subnet.ssosec-public-subnet.id
-  security_groups = [aws_security_group.ssosec-sg.id]
+# resource "aws_network_interface" "ssosec-nic" {
+#   subnet_id       = aws_subnet.ssosec-public-subnet.id
+#   security_groups = [aws_security_group.ssosec-sg.id]
 
-  tags = {
-    Name = local.ssosec_nic
-  }
-}
+#   tags = {
+#     Name = local.ssosec_nic
+#   }
+# }
 
 resource "aws_instance" "ssosec-inc" {
   ami                         = data.aws_ami.amazon-linux-2.id
@@ -48,10 +48,10 @@ resource "aws_instance" "ssosec-inc" {
   key_name                    = aws_key_pair.generated_key.key_name
   iam_instance_profile        = aws_iam_instance_profile.this.name
 
-  network_interface {
-    network_interface_id = aws_network_interface.ssosec-nic.id
-    device_index         = 0
-  }
+  # network_interface {
+  #   network_interface_id = aws_network_interface.ssosec-nic.id
+  #   device_index         = 0
+  # }
 
   tags = local.tags
 }
