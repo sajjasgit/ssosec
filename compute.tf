@@ -30,7 +30,6 @@ resource "aws_key_pair" "generated_key" {
 }
 
 resource "aws_instance" "ssosec-inc" {
-  name                        = local.instance_name
   ami                         = data.aws_ami.amazon-linux-2.id
   instance_type               = var.instance_type
   subnet_id                   = aws_subnet.ssosec-public-subnet.id
