@@ -66,5 +66,6 @@ resource "aws_volume_attachment" "this" {
 
 resource "aws_ebs_volume" "ssosec-ebs" {
   availability_zone = local.availability_zone
+  type              = "gp2"
   size              = 32
 }
