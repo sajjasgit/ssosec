@@ -40,14 +40,18 @@ variable "env" {
   description = "environment where we are deploying application"
 }
 
-variable "vpc_cidr" {
+variable "network_cidr" {
   description = "vpc cidr block"
 }
 
-variable "public_subnet_cidr" {
-  description = "the cidr block of public subnet"
+variable "subnet_cidr" {
+  description = "the cidr block of subnet"
 }
 
-variable "region" {
-  description = "the region of application deployment"
+variable "aws_region" {
+  description = "the region of application deployment for aws"
+}
+
+variable "azure_region" {
+  description = "the region of application deployment for azure"
 }
