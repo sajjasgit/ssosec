@@ -1,7 +1,7 @@
-resource "aws_security_group" "ssosec-sg" {
-  name        = local.sg_name
+resource "aws_security_group" "ssosec_sg" {
+  name        = "${var.prefix}-sg"
   description = "Allow SSH and application inbound traffic"
-  vpc_id      = aws_vpc.ssosec-vpc.id
+  vpc_id      = aws_vpc.ssosec_vpc.id
 
   ingress {
     from_port   = 22

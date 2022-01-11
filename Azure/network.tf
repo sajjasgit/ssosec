@@ -1,34 +1,34 @@
 resource "azurerm_virtual_network" "ssosec_vnet" {
-  name                = local.network_name
+  name                = "${var.prefix}-vnet"
   address_space       = [var.network_cidr]
   location            = azurerm_resource_group.ssosec_rg.location
   resource_group_name = azurerm_resource_group.ssosec_rg.name
-  tags                = local.tags
+  tags                = var.tags
 }
 
 resource "azurerm_subnet" "ssosec_subnet" {
-  name                 = local.subnet_name
+  name                 = "${var.prefix}-subnet"
   resource_group_name  = azurerm_resource_group.ssosec_rg.name
   virtual_network_name = azurerm_virtual_network.ssosec_vnet.name
-  address_prefix       = var.subnet_cidr
+  address_prefixes     = [var.subnet_cidr]
 }
 
 resource "azurerm_public_ip" "ssosec_public_ip" {
-  name                = local.public_ip
+  name                = "${var.prefix}-pip"
   location            = azurerm_resource_group.ssosec_rg.location
   resource_group_name = azurerm_resource_group.ssosec_rg.name
   allocation_method   = "Dynamic"
 
-  tags = local.tags
+  tags = var.tags
 }
 
 resource "azurerm_network_interface" "ssosec_nic" {
-  name                = local.nic_name
+  name                = "${var.prefix}-nic"
   location            = azurerm_resource_group.ssosec_rg.location
   resource_group_name = azurerm_resource_group.ssosec_rg.name
 
   ip_configuration {
-    name                          = local.nic_ip_config_name
+    name                          = "${var.prefix}-nic-config"
     subnet_id                     = azurerm_subnet.ssosec_subnet.id
     private_ip_address_allocation = "dynamic"
     public_ip_address_id          = azurerm_public_ip.ssosec_public_ip.ip_address
@@ -36,7 +36,7 @@ resource "azurerm_network_interface" "ssosec_nic" {
 }
 
 resource "azurerm_network_security_group" "ssosec_nsg" {
-  name                = local.nsg_name
+  name                = "${var.prefix}-nsg"
   location            = azurerm_resource_group.ssosec_rg.location
   resource_group_name = azurerm_resource_group.ssosec_rg.name
 
@@ -109,12 +109,10 @@ resource "azurerm_network_security_group" "ssosec_nsg" {
     }
   ]
 
-  tags = {
-    Owner = "ssosec admin"
-  }
+  tags = var.tags
 }
 
 resource "azurerm_subnet_network_security_group_association" "this" {
-  subnet_id                 = azurerm_subnet.ssosec-subnet.id
+  subnet_id                 = azurerm_subnet.ssosec_subnet.id
   network_security_group_id = azurerm_network_security_group.ssosec_nsg.id
 }

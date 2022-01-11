@@ -1,5 +1,5 @@
-resource "aws_iam_role" "this" {
-  name               = local.iam_ecr_role
+resource "aws_iam_role" "ssosec_role" {
+  name               = "${var.prefix}-iam-role"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -17,14 +17,14 @@ resource "aws_iam_role" "this" {
 EOF
 }
 
-resource "aws_iam_instance_profile" "this" {
-  name = local.iam_ecr_role_profile
-  role = aws_iam_role.this.name
+resource "aws_iam_instance_profile" "ssosec_iam_instance_profile" {
+  name = "${var.prefix}-iam-role-profile"
+  role = aws_iam_role.ssosec_role.name
 }
 
-resource "aws_iam_role_policy" "this" {
-  name   = local.iam_ecr_role_policy
-  role   = aws_iam_role.this.id
+resource "aws_iam_role_policy" "ssosec_instance_role_profile" {
+  name   = "${var.prefix}-iam-role-policy"
+  role   = aws_iam_role.ssosec_role.id
   policy = <<EOF
 {
     "Version": "2012-10-17",

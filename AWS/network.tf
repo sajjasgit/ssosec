@@ -1,10 +1,10 @@
 resource "aws_vpc" "ssosec_vpc" {
-  cidr_block           = local.network_name
+  cidr_block           = var.network_cidr
   enable_dns_hostnames = true
   tags = merge(
-    local.tags,
+    var.tags,
     {
-      Name = local.network_name
+      Name = "${var.prefix}-vpc"
     }
   )
 }
@@ -12,16 +12,16 @@ resource "aws_vpc" "ssosec_vpc" {
 resource "aws_subnet" "ssosec_public_subnet" {
   cidr_block        = var.subnet_cidr
   vpc_id            = aws_vpc.ssosec_vpc.id
-  availability_zone = local.availability_zone
+  availability_zone = "${var.region}a"
   tags = {
-    Name = local.subnet_name
+    Name = "${var.prefix}-public-sb"
   }
 }
 
 resource "aws_route_table" "ssosec_public_rt" {
   vpc_id = aws_vpc.ssosec_vpc.id
   tags = {
-    Name = local.route_table_name
+    Name = "${var.prefix}-public-rt"
   }
 }
 
@@ -33,7 +33,7 @@ resource "aws_route_table_association" "ssosec_public_route_assoc" {
 resource "aws_internet_gateway" "ssosec_igw" {
   vpc_id = aws_vpc.ssosec_vpc.id
   tags = {
-    Name = local.igw_name
+    Name = "${var.prefix}-igw"
   }
 }
 
@@ -43,7 +43,7 @@ resource "aws_route" "ssosec_igw_route" {
   destination_cidr_block = "0.0.0.0/0"
 }
 
-resource "aws_network_acl" "ssosec-nacl" {
+resource "aws_network_acl" "ssosec_nacl" {
   vpc_id     = aws_vpc.ssosec_vpc.id
   subnet_ids = [aws_subnet.ssosec_public_subnet.id]
 
@@ -120,6 +120,6 @@ resource "aws_network_acl" "ssosec-nacl" {
   }
 
   tags = {
-    Name = local.nacl_name
+    Name = "${var.prefix}-nacl"
   }
 }

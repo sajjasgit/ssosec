@@ -15,15 +15,15 @@ data "aws_ami" "amazon-linux-2" {
   }
 }
 
-resource "aws_instance" "ssosec-inc" {
+resource "aws_instance" "ssosec_inc" {
   ami                         = data.aws_ami.amazon-linux-2.id
   instance_type               = var.instance_type
-  subnet_id                   = aws_subnet.ssosec-public-subnet.id
-  vpc_security_group_ids      = [aws_security_group.ssosec-sg.id]
+  subnet_id                   = aws_subnet.ssosec_public_subnet.id
+  vpc_security_group_ids      = [aws_security_group.ssosec_sg.id]
   associate_public_ip_address = true
-  user_data                   = base64encode(templatefile("${path.module}/scripts/install_app.sh", { APP_ECR_REPO_URL = aws_ecr_repository.ssosec-ecr.repository_url, REGION = var.region }))
-  key_name                    = aws_key_pair.generated_key.key_name
-  iam_instance_profile        = aws_iam_instance_profile.this.name
+  user_data                   = base64encode(templatefile("${path.module}/scripts/install_app.sh", { APP_ECR_REPO_URL = aws_ecr_repository.ssosec_ecr.repository_url, REGION = var.region }))
+  key_name                    = var.keyname
+  iam_instance_profile        = aws_iam_instance_profile.ssosec_iam_instance_profile.name
 
   root_block_device {
     volume_size = 32
@@ -31,6 +31,6 @@ resource "aws_instance" "ssosec-inc" {
   }
 
   tags = {
-    Name = local.instance_name
+    Name = "${var.prefix}-vm"
   }
 }

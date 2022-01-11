@@ -1,10 +1,10 @@
-resource "aws_ecr_repository" "ssosec-ecr" {
-  name                 = local.container_repo_name
+resource "aws_ecr_repository" "ssosec_ecr" {
+  name                 = "${var.prefix}-ecr-repo"
   image_tag_mutability = "MUTABLE"
 }
 
-resource "aws_ecr_lifecycle_policy" "ssosec-ecr-policy" {
-  repository = aws_ecr_repository.ssosec-ecr.name
+resource "aws_ecr_lifecycle_policy" "ssosec_ecr_policy" {
+  repository = aws_ecr_repository.ssosec_ecr.name
 
   policy = jsonencode({
     rules = [{
