@@ -1,6 +1,6 @@
 resource "azurerm_virtual_network" "ssosec_vnet" {
   name                = local.network_name
-  address_space       = [var.vnet_cidr]
+  address_space       = [var.network_cidr]
   location            = azurerm_resource_group.ssosec_rg.location
   resource_group_name = azurerm_resource_group.ssosec_rg.name
 }
@@ -9,7 +9,7 @@ resource "azurerm_subnet" "ssosec-subnet" {
   name                 = local.subnet_name
   resource_group_name  = azurerm_resource_group.ssosec_rg.name
   virtual_network_name = azurerm_virtual_network.ssosec_vnet.name
-  address_prefix       = var.azure_subnet_cidr
+  address_prefix       = var.subnet_cidr
 }
 
 resource "azurerm_network_interface" "ssosec_nic" {
