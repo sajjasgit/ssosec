@@ -12,7 +12,7 @@ resource "aws_vpc" "ssosec_vpc" {
 resource "aws_subnet" "ssosec_public_subnet" {
   cidr_block        = var.subnet_cidr
   vpc_id            = aws_vpc.ssosec_vpc.id
-  availability_zone = "${var.region}a"
+  availability_zone = "${var.aws_region}a"
   tags = {
     Name = "${var.prefix}-public-sb"
   }
