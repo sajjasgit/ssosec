@@ -12,6 +12,17 @@ resource "azurerm_subnet" "ssosec-subnet" {
   address_prefix       = var.subnet_cidr
 }
 
+resource "azurerm_public_ip" "ssosec_public_ip" {
+  name                = "acceptanceTestPublicIp1"
+  location            = azurerm_resource_group.ssosec_rg.location
+  resource_group_name = azurerm_resource_group.ssosec_rg.name
+  allocation_method   = "Dynamic"
+
+  tags = {
+    owner = "ssosec admin"
+  }
+}
+
 resource "azurerm_network_interface" "ssosec_nic" {
   name                = local.nic_name
   location            = azurerm_resource_group.ssosec_rg.location
@@ -21,6 +32,7 @@ resource "azurerm_network_interface" "ssosec_nic" {
     name                          = local.nic_ip_config_name
     subnet_id                     = azurerm_subnet.ssosec-subnet.id
     private_ip_address_allocation = "dynamic"
+    public_ip_address_id          = azurerm_public_ip.ssosec_public_ip.ip_address
   }
 }
 
