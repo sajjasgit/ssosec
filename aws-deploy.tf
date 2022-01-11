@@ -1,8 +1,8 @@
-module "aws" {
+module "aws-deploy" {
   source        = "./AWS"
   network_cidr  = var.network_cidr
   subnet_cidr   = var.subnet_cidr
-  aws_region    = var.aws_region
+  region        = var.aws_region
   instance_type = var.instance_type
   keyname       = var.keyname
   prefix        = "${var.app_name}-${var.env}"

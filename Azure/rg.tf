@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "ssosec_rg" {
   name     = "${var.prefix}-rg"
-  location = var.azure_region
+  location = var.region
 
   tags = local.tags
 }

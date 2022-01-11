@@ -48,7 +48,7 @@ variable "subnet_cidr" {
   description = "the cidr block of subnet"
 }
 
-variable "aws_region" {
+variable "region" {
   description = "the region of application deployment for aws"
 }
 

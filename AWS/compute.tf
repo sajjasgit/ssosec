@@ -21,7 +21,7 @@ resource "aws_instance" "ssosec_inc" {
   subnet_id                   = aws_subnet.ssosec_public_subnet.id
   vpc_security_group_ids      = [aws_security_group.ssosec_sg.id]
   associate_public_ip_address = true
-  user_data                   = base64encode(templatefile("${path.module}/scripts/install_app.sh", { APP_ECR_REPO_URL = aws_ecr_repository.ssosec_ecr.repository_url, REGION = var.aws_region }))
+  user_data                   = base64encode(templatefile("${path.module}/scripts/install_app.sh", { APP_ECR_REPO_URL = aws_ecr_repository.ssosec_ecr.repository_url, REGION = var.region }))
   key_name                    = var.keyname
   iam_instance_profile        = aws_iam_instance_profile.ssosec_iam_instance_profile.name
 
