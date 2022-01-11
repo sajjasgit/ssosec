@@ -1,20 +1,30 @@
 locals {
-  prefix               = "${var.app_name}-${var.env}"
-  network_name         = "${var.prefix}-vpc"
-  subnet_name          = "${local.prefix}-psb"
-  public_rt_name       = "${local.prefix}-prt"
+  # common
+  prefix              = "${var.app_name}-${var.env}"
+  network_name        = "${var.prefix}-virtual-net"
+  subnet_name         = "${local.prefix}-sb"
+  instance_name       = "${local.prefix}-inc"
+  container_repo_name = "${local.prefix}-container-repo"
+  tags = {
+    Owner       = "ssosec admin"
+    Environment = var.env
+    Project     = "SSOSEC"
+  }
+
+  # AWS
+  route_table_name     = "${local.prefix}-rt"
   igw_name             = "${local.prefix}-igw"
   nacl_name            = "${local.prefix}-nacl"
-  ecr_name             = "${local.prefix}-ecr"
   sg_name              = "${local.prefix}-sg"
   iam_ecr_role         = "${local.prefix}-ecr-role"
   iam_ecr_role_profile = "${local.prefix}-ecr-role-profile"
   iam_ecr_role_policy  = "${local.prefix}-ecr-role-policy"
-  ssosec_nic           = "${local.prefix}-nic"
   availability_zone    = "${var.region}a"
-  instance_name        = "${local.prefix}-inc"
-  tags = {
-    Owner       = "ssosec-admin"
-    Environment = var.env
-  }
+
+
+  # Azure
+  ssosec_nic           = "${local.prefix}-nic"
+  rg_name              = "${var.prefix}-rg"
+  storage_os_disk_name = "${var.prefix}-disk1"
+  ad_app_name          = "${var.prefix}-ad-app"
 }

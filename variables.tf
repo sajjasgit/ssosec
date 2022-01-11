@@ -41,7 +41,7 @@ variable "env" {
 }
 
 variable "network_cidr" {
-  description = "vpc cidr block"
+  description = "virtual network cidr block"
 }
 
 variable "subnet_cidr" {
@@ -54,4 +54,12 @@ variable "aws_region" {
 
 variable "azure_region" {
   description = "the region of application deployment for azure"
+}
+
+variable "vm_hostname" {
+  description = "hostname of the virtual machine provisioning"
+}
+
+variable "vm_username" {
+  description = "username for virtual machine provisioning"
 }

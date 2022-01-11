@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "ssosec-ecr" {
-  name                 = local.ecr_name
+  name                 = local.container_repo_name
   image_tag_mutability = "MUTABLE"
 }
 

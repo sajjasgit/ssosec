@@ -15,20 +15,6 @@ data "aws_ami" "amazon-linux-2" {
   }
 }
 
-resource "tls_private_key" "this" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
-
-resource "aws_key_pair" "generated_key" {
-  key_name   = var.keyname
-  public_key = tls_private_key.this.public_key_openssh
-
-  provisioner "local-exec" { # Create ".pem" to your computer!!
-    command = "echo '${tls_private_key.this.private_key_pem}' > ${path.module}/${var.keyname}.pem"
-  }
-}
-
 resource "aws_instance" "ssosec-inc" {
   ami                         = data.aws_ami.amazon-linux-2.id
   instance_type               = var.instance_type
@@ -48,15 +34,3 @@ resource "aws_instance" "ssosec-inc" {
     Name = local.instance_name
   }
 }
-
-# resource "aws_volume_attachment" "this" {
-#   device_name = "/dev/xvda"
-#   volume_id   = aws_ebs_volume.ssosec-ebs.id
-#   instance_id = aws_instance.ssosec-inc.id
-# }
-
-# resource "aws_ebs_volume" "ssosec-ebs" {
-#   availability_zone = local.availability_zone
-#   type              = "gp2"
-#   size              = 32
-# }
