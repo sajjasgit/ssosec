@@ -55,8 +55,4 @@ variable "prefix" {
   description = "prefix about the deployment"
 }
 
-variable "tags" {
-  description = "common tags"
-}
-
 variable "public_key" {}

@@ -25,5 +25,5 @@ resource "azurerm_linux_virtual_machine" "ssosec_vm" {
     version   = "latest"
   }
 
-  tags = var.tags
+  tags = local.tags
 }

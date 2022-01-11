@@ -65,5 +65,3 @@ variable "region" {
 # }
 
 variable "prefix" {}
-
-variable "tags" {}

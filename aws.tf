@@ -5,7 +5,6 @@ module "aws" {
   region        = var.aws_region
   instance_type = var.instance_type
   keyname       = var.keyname
-  prefix        = local.prefix
-  tags          = local.tags
+  prefix        = "${var.app_name}-${var.env}"
   ssh_location  = var.ssh_location
 }

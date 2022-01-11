@@ -3,6 +3,10 @@ resource "random_string" "vm_sp_secret" {
   special = true
 }
 
+resource "time_rotating" "this" {
+  rotation_days = 7
+}
+
 resource "azuread_application" "ssosec_vm_app" {
   # name         = "${var.prefix}-acr-app"
   display_name = "${var.prefix}-acr-app"
@@ -15,27 +19,15 @@ resource "azuread_service_principal" "ssosec_vm_sp" {
 
 resource "azuread_service_principal_password" "ssosec_vm_sp" {
   service_principal_id = azuread_service_principal.ssosec_vm_sp.id
-  value                = random_string.vm_sp_secret.result
-  end_date_relative    = "8760h"
-
-  lifecycle {
-    ignore_changes = [
-      value,
-      end_date_relative
-    ]
+  rotate_when_changed = {
+    rotation = time_rotating.this.id
   }
 }
 
 resource "azuread_application_password" "ssosec_vm_sp" {
   application_object_id = azuread_application.ssosec_vm_app.id
-  value                 = random_string.vm_sp_secret.result
-  end_date_relative     = "8760h"
-
-  lifecycle {
-    ignore_changes = [
-      value,
-      end_date_relative
-    ]
+  rotate_when_changed = {
+    rotation = time_rotating.this.id
   }
 }
 

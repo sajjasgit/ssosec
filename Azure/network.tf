@@ -3,7 +3,7 @@ resource "azurerm_virtual_network" "ssosec_vnet" {
   address_space       = [var.network_cidr]
   location            = azurerm_resource_group.ssosec_rg.location
   resource_group_name = azurerm_resource_group.ssosec_rg.name
-  tags                = var.tags
+  tags                = local.tags
 }
 
 resource "azurerm_subnet" "ssosec_subnet" {
@@ -19,7 +19,7 @@ resource "azurerm_public_ip" "ssosec_public_ip" {
   resource_group_name = azurerm_resource_group.ssosec_rg.name
   allocation_method   = "Dynamic"
 
-  tags = var.tags
+  tags = local.tags
 }
 
 resource "azurerm_network_interface" "ssosec_nic" {
@@ -40,76 +40,22 @@ resource "azurerm_network_security_group" "ssosec_nsg" {
   location            = azurerm_resource_group.ssosec_rg.location
   resource_group_name = azurerm_resource_group.ssosec_rg.name
 
-  security_rule = [
-    {
-      name                       = "allow SSH inbound"
-      priority                   = 100
-      direction                  = "Inbound"
-      access                     = "Allow"
-      protocol                   = "Tcp"
-      source_port_range          = "22"
-      destination_port_range     = "22"
-      source_address_prefix      = "*"
-      destination_address_prefix = "*"
-    },
-    {
-      name                       = "allow HTTP inbound"
-      priority                   = 101
-      direction                  = "Inbound"
-      access                     = "Allow"
-      protocol                   = "Tcp"
-      source_port_range          = "80"
-      destination_port_range     = "80"
-      source_address_prefix      = "*"
-      destination_address_prefix = "*"
-    },
-    {
-      name                       = "allow HTTPS inbound"
-      priority                   = 102
-      direction                  = "Inbound"
-      access                     = "Allow"
-      protocol                   = "Tcp"
-      source_port_range          = "443"
-      destination_port_range     = "443"
-      source_address_prefix      = "*"
-      destination_address_prefix = "*"
-    },
-    {
-      name                       = "allow SSH outbound"
-      priority                   = 100
-      direction                  = "Outbound"
-      access                     = "Allow"
-      protocol                   = "Tcp"
-      source_port_range          = "22"
-      destination_port_range     = "22"
-      source_address_prefix      = "*"
-      destination_address_prefix = "*"
-    },
-    {
-      name                       = "allow HTTP outbound"
-      priority                   = 101
-      direction                  = "Outbound"
-      access                     = "Allow"
-      protocol                   = "Tcp"
-      source_port_range          = "80"
-      destination_port_range     = "80"
-      source_address_prefix      = "*"
-      destination_address_prefix = "*"
-    },
-    {
-      name                       = "allow HTTPS outbound"
-      priority                   = 102
-      direction                  = "Outbound"
-      access                     = "Allow"
-      protocol                   = "Tcp"
-      source_port_range          = "443"
-      destination_port_range     = "443"
-      source_address_prefix      = "*"
-      destination_address_prefix = "*"
-    }
-  ]
+  tags = local.tags
+}
 
-  tags = var.tags
+resource "azurerm_network_security_rule" "testrules" {
+  for_each                    = local.nsgrules
+  name                        = each.key
+  direction                   = each.value.direction
+  access                      = each.value.access
+  priority                    = each.value.priority
+  protocol                    = each.value.protocol
+  source_port_range           = each.value.source_port_range
+  destination_port_range      = each.value.destination_port_range
+  source_address_prefix       = each.value.source_address_prefix
+  destination_address_prefix  = each.value.destination_address_prefix
+  resource_group_name         = azurerm_resource_group.ssosec_rg.name
+  network_security_group_name = azurerm_network_security_group.ssosec_nsg.name
 }
 
 resource "azurerm_subnet_network_security_group_association" "this" {

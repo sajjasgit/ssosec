@@ -7,7 +7,6 @@ module "azure" {
   region        = var.azure_region
   vm_hostname   = var.vm_hostname
   vm_username   = var.vm_username
-  prefix        = local.prefix
-  tags          = local.tags
+  prefix        = "${var.app_name}-${var.env}"
   public_key    = tls_private_key.this.public_key_openssh
 }
