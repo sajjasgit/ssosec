@@ -1,5 +1,5 @@
 resource "aws_vpc" "ssosec_vpc" {
-  cidr_block           = var.network_name
+  cidr_block           = local.network_name
   enable_dns_hostnames = true
   tags = merge(
     local.tags,

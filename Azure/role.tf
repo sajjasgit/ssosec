@@ -4,7 +4,8 @@ resource "random_string" "vm_sp_secret" {
 }
 
 resource "azuread_application" "ssosec_vm_app" {
-  name = local.ad_app_name
+  name         = local.ad_app_name
+  display_name = local.ad_app_name
 }
 
 resource "azuread_service_principal" "ssosec_vm_sp" {
