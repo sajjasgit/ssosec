@@ -7,4 +7,5 @@ module "aws-deploy" {
   keyname       = var.keyname
   prefix        = "${var.app_name}-${var.env}"
   ssh_location  = var.ssh_location
+  hostedzone    = var.hostedzone
 }
