@@ -4,8 +4,8 @@ terraform {
     organization = "TFE-CHIP"
 
     workspaces {
-      # name = terraform.workspace
-      name = "ssosec"
+      name = terraform.workspace
+      # name = "ssosec"
     }
   }
 }

@@ -56,8 +56,6 @@ variable "azure_region" {
   description = "the region of application deployment for azure"
 }
 
-variable "region" {}
-
 variable "vm_hostname" {
   description = "hostname of the virtual machine provisioning"
 }
