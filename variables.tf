@@ -55,4 +55,4 @@ variable "prefix" {
   description = "prefix about the deployment"
 }
 
-variable "public_key" {}
+# variable "public_key" {}

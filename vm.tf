@@ -10,7 +10,7 @@ resource "azurerm_linux_virtual_machine" "ssosec_vm" {
 
   admin_ssh_key {
     username   = var.vm_username
-    public_key = var.public_key
+    public_key = aws_key_pair.generated_key.public_key
   }
 
   os_disk {
