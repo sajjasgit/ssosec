@@ -39,7 +39,7 @@ variable "subnet_cidr" {
   description = "the cidr block of subnet"
 }
 
-variable "region" {
+variable "azure_region" {
   description = "the region of application deployment for azure"
 }
 

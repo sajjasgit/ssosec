@@ -34,8 +34,8 @@ echo "Setting up docker-compose files"
 create_docker_compose_files
 
 echo "Executing docker-compose for app"
-ECR_REPO_URL=$(echo ${APP_ECR_REPO_URL} | cut -d'/' -f 1)
-aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin $ECR_REPO_URL
+REPO_URL=$(echo ${APP_REPO_URL} | cut -d'/' -f 1)
+aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin $REPO_URL
 
 docker-compose -f /tmp/docker-compose-app.yml down
 docker-compose -f /tmp/docker-compose-app.yml pull
