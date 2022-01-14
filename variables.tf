@@ -31,15 +31,6 @@ variable "ssh_location" {
   # }
 }
 
-variable "app_name" {
-  description = "name of the application"
-  default     = "ssosec"
-}
-
-variable "env" {
-  description = "environment where we are deploying application"
-}
-
 variable "network_cidr" {
   description = "virtual network cidr block"
 }
@@ -48,11 +39,7 @@ variable "subnet_cidr" {
   description = "the cidr block of subnet"
 }
 
-variable "aws_region" {
-  description = "the region of application deployment for aws"
-}
-
-variable "azure_region" {
+variable "region" {
   description = "the region of application deployment for azure"
 }
 
@@ -63,3 +50,9 @@ variable "vm_hostname" {
 variable "vm_username" {
   description = "username for virtual machine provisioning"
 }
+
+variable "prefix" {
+  description = "prefix about the deployment"
+}
+
+variable "public_key" {}
