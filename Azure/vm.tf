@@ -5,7 +5,7 @@ resource "azurerm_linux_virtual_machine" "ssosec_vm" {
   network_interface_ids = [azurerm_network_interface.ssosec_nic.id]
   # delete_os_disk_on_termination    = true
   # delete_data_disks_on_termination = true
-  size           = "Standard_DS1_v2"
+  size           = "Standard_B1s"
   admin_username = var.vm_username
 
   admin_ssh_key {
