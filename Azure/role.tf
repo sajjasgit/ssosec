@@ -12,7 +12,7 @@ resource "azuread_service_principal" "ssosec_acr_sp" {
 }
 
 resource "azurerm_role_assignment" "aks_sp_container_registry" {
-  scope                = azurerm_linux_virtual_machine.ssosec_vm.id
+  scope                = azurerm_resource_group.ssosec_rg.id
   role_definition_name = "AcrPull"
   principal_id         = azuread_service_principal.ssosec_acr_sp.object_id
 }
