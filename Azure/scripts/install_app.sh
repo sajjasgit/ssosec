@@ -34,7 +34,8 @@ echo "Setting up docker-compose files"
 create_docker_compose_files
 
 echo "Executing docker-compose for app"
-ACR_REPO_URL=$(echo ${APP_ACR_REPO_URL} | cut -d'/' -f 1)
+# ACR_REPO_URL=$(echo ${APP_ACR_REPO_URL} | cut -d'/' -f 1)
+az acr login --name ${APP_ACR_REPO_URL}
 # aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin $ECR_REPO_URL
 
 docker-compose -f /tmp/docker-compose-app.yml down
