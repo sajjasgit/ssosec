@@ -28,3 +28,9 @@ resource "azurerm_linux_virtual_machine" "ssosec_vm" {
 
   tags = local.tags
 }
+
+data "azurerm_public_ip" "public_ip" {
+  name                = azurerm_public_ip.ssosec_public_ip.name
+  resource_group_name = azurerm_resource_group.ssosec_rg.name
+  depends_on          = [azurerm_linux_virtual_machine.ssosec_vm]
+}
