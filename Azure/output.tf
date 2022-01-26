@@ -3,5 +3,5 @@ output "acr_repo_url" {
 }
 
 output "azure_vm_publicip" {
-  value = azurerm_linux_virtual_machine.ssosec_vm.public_ip_address
+  value = azurerm_public_ip.ssosec_public_ip.ip_address
 }
