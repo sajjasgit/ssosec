@@ -31,7 +31,7 @@ resource "azurerm_network_interface" "ssosec_nic" {
     name                          = "${var.prefix}-nic-config"
     subnet_id                     = azurerm_subnet.ssosec_subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.ssosec_public_ip.ip_address
+    public_ip_address_id          = azurerm_public_ip.ssosec_public_ip.id
   }
 }
 
